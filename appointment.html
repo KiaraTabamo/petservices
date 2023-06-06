@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <title>Appointment</title>
+  </head>
+  <body>
+    <section class="form-02-main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="_lk_de">
+              <div class="form-03-main">
+                <div class="logo">
+                  <img src="assets/images/logo.png" class="rounded-circle" />
+                </div>
+                <div class="container">
+                  <form>
+                    <label class="form-label"
+                      >Please fill out the checklist for each appointment</label
+                    >
+                    <div class="mb-3">
+                      <label class="form-label">Appointment Time</label>
+                      <select id="sched">
+                        <option value="9AM MONDAY">9AM MONDAY</option>
+                        <option value="11AM TUESDAY">11AM TUESDAY</option>
+                        <option value="1PM WEDNESDAY">1PM WEDNESDAY</option>
+                        <option value="12PM THURSDAY">12PM THURSDAY</option>
+                        <option value="2PM FRIDAY">2PM FRIDAY</option>
+                        <option value="1PM SATURDAY">1PM SATURDAY</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label">Pet Type</label>
+                      <input type="text" class="form-control" id="PType" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label">Pet Name</label>
+                      <input type="text" class="form-control" id="PNAME" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label">Owner's Name</label>
+                      <input type="text" class="form-control" id="ONAME" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label">Contact Number</label>
+                      <input type="text" class="form-control" id="CNumber" />
+                    </div>
+
+                    <div class="mb-3">
+                      <label>Services</label>
+                      <select id="Genbox">
+                        <option value="Bath">Bath</option>
+                        <option value="Grooming">Grooming</option>
+                        <option value="Bath & Grooming">Bath & Grooming</option>
+                        <option value="Teeth-brushing">Teeth-brushing</option>
+                        <option value="Nail buffling">Nail buffling</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="Insbtn">
+                      INSERT
+                    </button>
+                    <button type="button" class="btn btn-primary" id="Delbtn">
+                      DELETE
+                    </button>
+                    <p class="small fw-bold mt-2 pt-1 mb-0">
+                      Wanna view appointments?
+                      <a href="viewing.html" class="link-danger">View Now!</a>
+                    </p>
+                  </form>
+                </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    crossorigin="anonymous"
+  ></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyD5F7P0jWX-gJVNw4YlYQ37F_eBWYtncd4",
+      authDomain: "pet-grooming-8e69a.firebaseapp.com",
+      databaseURL: "https://pet-grooming-8e69a-default-rtdb.firebaseio.com",
+      projectId: "pet-grooming-8e69a",
+      storageBucket: "pet-grooming-8e69a.appspot.com",
+      messagingSenderId: "274425400095",
+      appId: "1:274425400095:web:0154d8be875a2d498d7e2a",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    import {
+      getDatabase,
+      ref,
+      set,
+      child,
+      update,
+      remove,
+      get,
+    } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+
+    const db = getDatabase();
+
+    // references
+
+    var schedule = document.getElementById("sched");
+    var Pettype = document.getElementById("PType");
+    var Petname = document.getElementById("PNAME");
+    var Ownersname = document.getElementById("ONAME");
+    var ContactNumber = document.getElementById("CNumber");
+    var Services = document.getElementById("Genbox");
+
+    var insBtn = document.getElementById("Insbtn");
+    var delBtn = document.getElementById("Delbtn");
+
+    // add data function
+
+    function InsertData() {
+      set(ref(db, "TheClients/" + ONAME.value), {
+        schedule: sched.value,
+        Pettype: PType.value,
+        Petname: PNAME.value,
+        Ownersname: ONAME.value,
+        ContactNumber: CNumber.value,
+        Services: Genbox.value,
+      })
+        .then(() => {
+          alert("data stored succesfully");
+        })
+        .catch((error) => {
+          alert("unseccesful, error" + error);
+        });
+    }
+
+    //Select data function//
+
+    function SelectData() {
+      const dbref = ref(db);
+
+      get(child(dbref, "TheClients/" + ONAME.value))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            sched.value = snapshot.val().schedule;
+            PType.value = snapshot.val().Pettype;
+            PNAME.value = snapshot.val().Petname;
+            ONAME.value = snapshot.val().Ownersname;
+            CNumber.value = snapshot.val().ContactNumber;
+            Genbox.value = snapshot.val().Services;
+          } else {
+            alert("No data found");
+          }
+        })
+        .catch((error) => {
+          alert("unseccesful, error" + error);
+        });
+    }
+
+    // update date function
+
+    function UpdateData() {
+      update(ref(db, "TheClients/" + ONAME.value), {
+        schedule: sched.value,
+        Pettype: PType.value,
+        Petname: PNAME.value,
+        Ownersname: ONAME.value,
+        ContactNumber: CNumber.value,
+        Services: Genbox.value,
+      })
+        .then(() => {
+          alert("data updated succesfully");
+        })
+        .catch((error) => {
+          alert("unseccesful, error" + error);
+        });
+    }
+
+    // Delete Function
+
+    function DeleteData() {
+      remove(ref(db, "TheClients/" + ONAME.value))
+        .then(() => {
+          alert("data removed succesfully");
+        })
+        .catch((error) => {
+          alert("unseccesful, error" + error);
+        });
+    }
+
+    //Assign Event Button
+
+    insBtn.addEventListener("click", InsertData);
+    delBtn.addEventListener("click", DeleteData);
+  </script>
+  </body>
+
+</html>

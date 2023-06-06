@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <title>Register</title>
+  </head>
+  
+  <body>
+    <section class="form-02-main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="_lk_de">
+              <div class="form-03-main">
+                <div class="logo">
+                  <img src="assets/images/logo.png" class="rounded-circle" />
+                </div>
+
+                <form name="registration_form" id="registration_form" method="post" action="#" enctype="multipart/form-data" >
+                  <div class="row">
+                
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                      <input type="text" name="email" id="email" class="form-control" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" >Password</label>
+                      <input type="password" name="password" id="password" class="form-control"  placeholder="Enter your password">
+                    </div>
+                    <button type="button" id="register" name="register" class="btn btn-info">Register Now</button>
+                     
+                  </div><!-- end col -->
+                </form>
+
+                <div class="checkbox form-group">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id=""
+                    />
+                    <label class=> Already have an account? </label>
+                  </div>
+                  <a href="login.html">Login</a>
+                </div>
+
+                <div class="form-group nm_lk">
+                  <p>Follow us on our Social Media!</p>
+                </div>
+
+                <div class="form-group pt-0">
+                  <div class="_social_04">
+                    <ol>
+                      <li><i class="fa fa-facebook"></i></li>
+                      <li><i class="fa fa-twitter"></i></li>
+                      <li><i class="fa fa-instagram"></i></li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyD5F7P0jWX-gJVNw4YlYQ37F_eBWYtncd4",
+        authDomain: "pet-grooming-8e69a.firebaseapp.com",
+        databaseURL: "https://pet-grooming-8e69a-default-rtdb.firebaseio.com",
+        projectId: "pet-grooming-8e69a",
+        storageBucket: "pet-grooming-8e69a.appspot.com",
+        messagingSenderId: "274425400095",
+        appId: "1:274425400095:web:0154d8be875a2d498d7e2a",
+      };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    console.log(app);
+  
+    
+  
+    //----- New Registration code start	  
+    document.getElementById("register").addEventListener("click", function() {
+      var email =  document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      //For new registration
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+        alert("Registration successfully!!");
+            window.location.href = 'login.html'
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        console.log(errorMessage);
+        alert(error);
+      });		  		  
+    });
+    //----- End
+  
+  </script>
+</body>
+
+
+
+</html>
